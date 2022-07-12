@@ -12,29 +12,37 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  StreamSubscription decoderConnectionStreamubscription;
+  StreamSubscription decoderConnectionStreamSubscription;
+  StreamSubscription decoderScanDataStreamSubscription;
 
   @override
   void initState() {
     super.initState();
     FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
-    decoderConnectionStreamubscription = FlutterHoneywellCaptuvoPlugin
+    decoderConnectionStreamSubscription = FlutterHoneywellCaptuvoPlugin
         .decoderConnectionStream
         .listen((isConnected) {
-      _showMyDialog();
+      _showMyDialog("Connection event received changed");
+
       if (isConnected) {
         FlutterHoneywellCaptuvoPlugin.startDecoderHardware();
       }
+    });
+
+    decoderScanDataStreamSubscription =
+        FlutterHoneywellCaptuvoPlugin.decoderScanDataStream.listen((barcode) {
+      _showMyDialog("Barcode: " + barcode);
     });
   }
 
   @override
   void dispose() {
-    decoderConnectionStreamubscription?.cancel();
+    decoderConnectionStreamSubscription?.cancel();
+    decoderScanDataStreamSubscription?.cancel();
     super.dispose();
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showMyDialog(String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -43,9 +51,8 @@ class _MyAppState extends State<MyApp> {
           title: const Text('AlertDialog Title'),
           content: SingleChildScrollView(
             child: ListBody(
-              children: const <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('Would you like to approve of this message?'),
+              children: <Widget>[
+                Text(message),
               ],
             ),
           ),
@@ -101,10 +108,8 @@ class _MyAppState extends State<MyApp> {
           ),
           child: Icon(Icons.scanner),
         ),
-        onTapDown: (_) => _showMyDialog(),
-        // FlutterHoneywellCaptuvoPlugin.startDecoderScanning(),
-        onTapUp: (_) =>
-            {}, //FlutterHoneywellCaptuvoPlugin.stopDecoderScanning(),
+        onTapDown: (_) => FlutterHoneywellCaptuvoPlugin.startDecoderScanning(),
+        onTapUp: (_) => FlutterHoneywellCaptuvoPlugin.stopDecoderScanning(),
       ),
     );
   }

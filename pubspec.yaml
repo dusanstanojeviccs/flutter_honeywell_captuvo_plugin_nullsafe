@@ -1,7 +1,8 @@
 name: flutter_honeywell_captuvo_plugin_nullsafe
-description: A new Flutter package project.
+description: Flutter wrapper for the Honeywell Captuvo SL22/42 iOS API with null safety.
 version: 1.0.0
-homepage:
+homepage: https://github.com/dusanstanojeviccs/flutter_honeywell_captuvo_plugin_nullsafe
+repository: https://github.com/dusanstanojeviccs/flutter_honeywell_captuvo_plugin_nullsafe
 
 environment:
   sdk: ">=2.16.2 <3.0.0"
@@ -22,4 +23,6 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   plugin:
-    pluginClass: FlutterHoneywellCaptuvoPlugin
+    platforms:
+      ios:
+        pluginClass: FlutterHoneywellCaptuvoPlugin
