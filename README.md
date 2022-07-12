@@ -1,6 +1,6 @@
 Important: This package is based on the flutter_honeywell_captuvo_plugin that can be found at https://github.com/entegyopensource/flutter_honeywell_captuvo_plugin written by @entegyopensource.
 
-The goal of this repository is to update the documentation for the project and to allow usage in flutter applications.
+The goal of this repository is to add null safety, update the documentation for the project and to allow usage in modern flutter applications.
 
 # Flutter Honeywell Captuvo Plugin
 Flutter wrapper for the Honeywell Captuvo SL22/42 iOS API with null safety.
